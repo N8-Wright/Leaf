@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.27)
+project(Leaf)
+enable_testing()
+set(CMAKE_CXX_STANDARD 20)
+add_subdirectory(Allocator)
+add_subdirectory(Containers)
+add_executable(Test main.cpp)
+target_link_libraries(Test Containers)
