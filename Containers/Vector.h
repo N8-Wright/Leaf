@@ -45,6 +45,24 @@ namespace Leaf::Containers {
             m_length++;
         }
 
+        void Insert(const T& value, size_t index) {
+            if (index > m_length) {
+                return;
+            }
+
+            MakeSpaceForInsert(index);
+            new(&(static_cast<T*>(m_block.Ptr))[index]) T(value);
+        }
+
+        void Insert(T&& value, size_t index) {
+            if (index > m_length) {
+                return;
+            }
+
+            MakeSpaceForInsert(index);
+            new(&(static_cast<T*>(m_block.Ptr))[index]) T(std::move(value));
+        }
+
         [[nodiscard]] size_t Length() const noexcept {
             return m_length;
         }
@@ -63,6 +81,19 @@ namespace Leaf::Containers {
             m_allocator.Deallocate(m_block);
             m_block = new_block;
         }
+
+        void MakeSpaceForInsert(size_t index) {
+            if (m_length == m_capacity) {
+                Grow();
+            }
+
+            m_length++;
+            auto items = static_cast<T*>(m_block.Ptr);
+            for (size_t i = m_length - 1; i > index; i--) {
+                new (&items[i]) T(std::move(items[i - 1]));
+            }
+        }
+
 
         size_t m_length;
         size_t m_capacity;
