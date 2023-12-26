@@ -15,10 +15,10 @@ TEST_CASE("Integers can be pushed", "[Vector]") {
 TEST_CASE("Integers can be inserted", "[Vector]") {
     Vector<int> integers;
     int i = 1;
-    integers.Insert(i++, 0);
-    integers.Insert(i++, 0);
-    integers.Insert(i++, 0);
-    integers.Insert(i, 0);
+    integers.Insert(0, i++);
+    integers.Insert(0, i++);
+    integers.Insert(0, i++);
+    integers.Insert(0, i);
 
     REQUIRE(integers.Length() == 4);
     REQUIRE(integers[0] == 4);
@@ -86,19 +86,19 @@ TEST_CASE("String can be emplaced", "[Vector]") {
 
 TEST_CASE("String can be inserted at beginning", "[Vector]") {
     Vector<std::string> strings;
-    strings.Insert("1", 0);
+    strings.Insert(0, "1");
     REQUIRE(strings[0] == "1");
 
-    strings.Insert("2", 0);
+    strings.Insert(0, "2");
     REQUIRE(strings[1] == "1");
     REQUIRE(strings[0] == "2");
 
-    strings.Insert("3", 0);
+    strings.Insert(0, "3");
     REQUIRE(strings[2] == "1");
     REQUIRE(strings[1] == "2");
     REQUIRE(strings[0] == "3");
 
-    strings.Insert("4", 0);
+    strings.Insert(0, "4");
     REQUIRE(strings[0] == "4");
     REQUIRE(strings[1] == "3");
     REQUIRE(strings[2] == "2");
@@ -128,14 +128,14 @@ TEST_CASE("String can be emplaced at beginning", "[Vector]") {
 
 TEST_CASE("String can be inserted at end", "[Vector]") {
     Vector<std::string> strings;
-    strings.Insert("1", 0);
+    strings.Insert(0, "1");
     REQUIRE(strings[0] == "1");
 
-    strings.Insert("2", 1);
+    strings.Insert(1, "2");
     REQUIRE(strings[0] == "1");
     REQUIRE(strings[1] == "2");
 
-    strings.Insert("3", 2);
+    strings.Insert(2, "3");
     REQUIRE(strings[0] == "1");
     REQUIRE(strings[1] == "2");
     REQUIRE(strings[2] == "3");
@@ -162,8 +162,8 @@ TEST_CASE("String can be inserted in random order", "[Vector]") {
     strings.Push("3");
     strings.Push("5");
 
-    strings.Insert("4", 2);
-    strings.Insert("2", 1);
+    strings.Insert(2, "4");
+    strings.Insert(1, "2");
 
     REQUIRE(strings[0] == "1");
     REQUIRE(strings[1] == "2");

@@ -66,7 +66,7 @@ namespace Leaf::Containers {
             new(&(static_cast<T*>(m_block.Ptr))[index]) T(std::forward<Args>(args)...);
         }
 
-        void Insert(const T& value, size_t index) {
+        void Insert(size_t index, const T &value) {
             if (index > m_length) {
                 return;
             }
@@ -75,7 +75,7 @@ namespace Leaf::Containers {
             new(&(static_cast<T*>(m_block.Ptr))[index]) T(value);
         }
 
-        void Insert(T&& value, size_t index) {
+        void Insert(size_t index, T &&value) {
             if (index > m_length) {
                 return;
             }
