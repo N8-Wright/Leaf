@@ -1,5 +1,5 @@
-#include <catch2/catch_test_macros.hpp>
 #include "Vector.h"
+#include <catch2/catch_test_macros.hpp>
 #include <sstream>
 using namespace Leaf::Containers;
 TEST_CASE("Integers can be pushed", "[Vector]") {
@@ -134,4 +134,55 @@ TEST_CASE("String can be inserted in random order", "[Vector]") {
     REQUIRE(strings[2] == "3");
     REQUIRE(strings[3] == "4");
     REQUIRE(strings[4] == "5");
+}
+
+TEST_CASE("String can be cleared", "[Vector]") {
+    Vector<std::string> strings;
+    strings.Push("Abc");
+    strings.Push("123");
+
+    strings.Clear();
+    REQUIRE(strings.Length() == 0);
+}
+
+TEST_CASE("Destructors called on clear", "[Vector]") {
+    static int destructorsCalled = 0;
+    class CTest {
+    public:
+        CTest() = default;
+
+        ~CTest() {
+            destructorsCalled++;
+        }
+    };
+
+    Vector<CTest> items;
+    items.Reserve(4);
+    items.Emplace();
+    items.Emplace();
+    items.Emplace();
+    items.Emplace();
+    items.Clear();
+    REQUIRE(destructorsCalled == 4);
+}
+
+TEST_CASE("Destructors called on destroy", "[Vector]") {
+    static int destructorsCalled = 0;
+    class CTest {
+    public:
+        CTest() = default;
+
+        ~CTest() {
+            destructorsCalled++;
+        }
+    };
+
+    {
+        Vector<CTest> items;
+        items.Reserve(4);
+        items.Emplace();
+        items.Emplace();
+    }
+
+    REQUIRE(destructorsCalled == 2);
 }

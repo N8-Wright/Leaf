@@ -72,6 +72,25 @@ namespace Leaf::Containers {
             return static_cast<T*>(m_block.Ptr)[index];
         }
 
+        [[nodiscard]] const T* Data() const noexcept {
+            return static_cast<T*>(m_block.Ptr);
+        }
+
+        void Clear() {
+            std::destroy(static_cast<T*>(m_block.Ptr), static_cast<T*>(m_block.Ptr) + m_length);
+            m_length = 0;
+        }
+
+        void Reserve(size_t capacity) {
+            if (capacity > m_capacity) {
+                m_capacity = capacity;
+                auto new_block = m_allocator.Allocate(sizeof(T) * m_capacity);
+                std::uninitialized_move_n(static_cast<T*>(m_block.Ptr), m_length, static_cast<T*>(new_block.Ptr));
+                std::destroy(static_cast<T*>(m_block.Ptr), static_cast<T*>(m_block.Ptr) + m_length);
+                m_allocator.Deallocate(m_block);
+                m_block = new_block;
+            }
+        }
     private:
         void Grow() {
             m_capacity *= 2;
