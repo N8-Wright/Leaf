@@ -45,6 +45,27 @@ namespace Leaf::Containers {
             m_length++;
         }
 
+        template<typename... Args>
+        void Emplace(int index, Args&&... args) {
+            assert(index >= 0);
+            if (index > m_length) {
+                return;
+            }
+
+            MakeSpaceForInsert(index);
+            new(&(static_cast<T*>(m_block.Ptr))[index]) T(std::forward<Args>(args)...);
+        }
+
+        template<typename... Args>
+        void Emplace(size_t index, Args&&... args) {
+            if (index > m_length) {
+                return;
+            }
+
+            MakeSpaceForInsert(index);
+            new(&(static_cast<T*>(m_block.Ptr))[index]) T(std::forward<Args>(args)...);
+        }
+
         void Insert(const T& value, size_t index) {
             if (index > m_length) {
                 return;
