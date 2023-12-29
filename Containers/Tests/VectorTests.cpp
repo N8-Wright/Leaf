@@ -1,6 +1,8 @@
 #include "Vector.h"
 #include <catch2/catch_test_macros.hpp>
 #include <sstream>
+#include <memory>
+#include <string>
 #include "StackAllocator.h"
 using namespace Leaf::Containers;
 TEST_CASE("Integers can be pushed", "[Vector]") {
