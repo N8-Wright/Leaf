@@ -8,3 +8,4 @@ add_library(Allocator
         AllocatorUtils.cpp)
 
 target_include_directories(Allocator PUBLIC .)
+add_subdirectory(Tests)
