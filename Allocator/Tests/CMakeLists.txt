@@ -1,4 +1,4 @@
-add_executable(AllocatorTests AllocatorUtilsTests.cpp)
+add_executable(AllocatorTests AllocatorUtilsTests.cpp StackAllocatorTests.cpp)
 target_link_libraries(AllocatorTests PRIVATE Catch2::Catch2WithMain Allocator)
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
     set(

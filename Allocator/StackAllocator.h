@@ -8,7 +8,7 @@ namespace Leaf::Allocator {
     class StackAllocator {
     public:
         Block Allocate(size_t size) {
-            if (m_head > StackSize) {
+            if (m_head + size > StackSize) {
                 return {};
             }
 
@@ -22,7 +22,11 @@ namespace Leaf::Allocator {
         }
 
         void Deallocate(Block block) {
-            (void) block;
+            // Only feasible to deallocate if the block requested is the previous
+            // block that was allocated.
+            if (&m_stack[m_head - block.Size] == block.Ptr) {
+                m_head -= block.Size;
+            }
         }
 
         void DeallocateAll() {
