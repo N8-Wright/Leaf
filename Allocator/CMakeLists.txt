@@ -1,5 +1,10 @@
-add_library(Allocator Block.h Block.cpp
+add_library(Allocator
+        Block.h
+        Block.cpp
         Mallocator.h
-        Mallocator.cpp)
+        Mallocator.cpp
+        StackAllocator.h
+        AllocatorUtils.h
+        AllocatorUtils.cpp)
 
 target_include_directories(Allocator PUBLIC .)

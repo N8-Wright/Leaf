@@ -1,6 +1,7 @@
 #include "Vector.h"
 #include <catch2/catch_test_macros.hpp>
 #include <sstream>
+#include "StackAllocator.h"
 using namespace Leaf::Containers;
 TEST_CASE("Integers can be pushed", "[Vector]") {
     Vector<int> integers;
@@ -237,4 +238,15 @@ TEST_CASE("Destructors called on destroy", "[Vector]") {
     }
 
     REQUIRE(destructorsCalled == 2);
+}
+
+TEST_CASE("Other allocators can be used", "[Vector]") {
+    Vector<std::string, Leaf::Allocator::StackAllocator<>> strings;
+    strings.Emplace("Hello");
+    strings.Emplace("World");
+    strings.Emplace("!");
+
+    REQUIRE(strings[0] == "Hello");
+    REQUIRE(strings[1] == "World");
+    REQUIRE(strings[2] == "!");
 }
