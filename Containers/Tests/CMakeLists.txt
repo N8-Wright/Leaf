@@ -1,4 +1,3 @@
-find_package(Catch2 REQUIRED)
 add_executable(ContainerTests VectorTests.cpp)
 target_link_libraries(ContainerTests PRIVATE Catch2::Catch2WithMain Containers)
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
